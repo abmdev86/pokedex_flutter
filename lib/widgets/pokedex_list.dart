@@ -100,8 +100,9 @@ class _PokedexListState extends State<PokedexList> {
           final p = _items[index];
           return ListTile(
             leading: CircleAvatar(child: Text('${p.id}')),
-            title: Text('#${p.id} ${p.name}'), // make sure this is a String
-            subtitle: Text('ID: ${p.id}'),
+            title: Text(
+              '${formatId(p.id)} ${p.name}',
+            ), // make sure this is a String
             onTap: () {
               // TODO: navigate to detail if you like
             },
