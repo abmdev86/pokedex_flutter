@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter/widgets/pokedex_list.dart';
-import 'pokemon.dart';
 
 void main() {
   runApp(const MyApp());
