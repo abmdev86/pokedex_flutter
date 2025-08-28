@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter/widgets/pokedex_list.dart';
+import 'package:pokedex_flutter/pokedex_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,10 +30,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('Pokedex')),
-        body: PokedexList(),
-      ),
+      home: Scaffold(body: PokedexPage()),
     );
   }
 }

@@ -44,7 +44,7 @@ Future<Pokemon> _fetchPokemonFromNetwork(int id) async {
 }
 
 /// Fetch a paginated list of Pokémon from PokeAPI.
-/// Returns a List<Pokemon> built from the `{ results: [{name, url}] }` payload.
+/// Returns a List of type Pokemon built from the `{ results: [{name, url}] }` payload.
 /// Cached per `limit/offset` for the lifetime of the app session.
 Future<List<Pokemon>> fetchPokeList({
   int limit = 20,
