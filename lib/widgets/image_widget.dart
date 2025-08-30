@@ -13,11 +13,14 @@ class ImageWidget extends StatelessWidget {
   final double height;
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      image,
-      width: width,
-      height: height,
-      fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Image.network(
+        image,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
