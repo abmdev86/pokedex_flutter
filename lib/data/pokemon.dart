@@ -4,27 +4,42 @@
 class Pokemon {
   final int id;
   final String name;
-  final double baseExp;
+  final int baseExp;
+  final int height;
+  final int weight;
 
-  const Pokemon({required this.id, required this.name, this.baseExp = 0});
+  const Pokemon({
+    required this.id,
+    required this.name,
+    this.baseExp = 0,
+    this.height = 0,
+    this.weight = 0,
+  });
 
   /// For /pokemon/{id} responses
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as int;
     final name = json['name'] as String;
-    final baseExp = json['base_experience'] as double;
-    return Pokemon(id: id, name: name, baseExp: baseExp);
+    final baseExp = json['base_experience'] as int;
+    final height = json['height'] as int;
+    final weight = json['weight'] as int;
+    return Pokemon(
+      id: id,
+      name: name,
+      baseExp: baseExp,
+      height: height,
+      weight: weight,
+    );
   }
 
   /// For list items from `{ results: [ { name, url } ] }`
   factory Pokemon.fromListItem(Map<String, dynamic> json) {
     final name = json['name'] as String;
     final url = json['url'] as String;
-    final baseExp = json['base_experience'] as double;
     final id =
         _extractIdFromUrl(url) ??
         (throw const FormatException('Could not extract id from url'));
-    return Pokemon(id: id, name: name, baseExp: baseExp);
+    return Pokemon(id: id, name: name);
   }
 
   static int? _extractIdFromUrl(String url) {

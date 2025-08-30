@@ -74,6 +74,7 @@ Future<List<Pokemon>> fetchPokeList({
   }
 }
 
+// returns a list of Pokemon {name, id}
 Future<List<Pokemon>> _fetchPokeListFromNetwork({
   required int limit,
   required int offset,

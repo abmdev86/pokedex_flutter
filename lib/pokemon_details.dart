@@ -1,23 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter/data/pokeapi.dart';
 import 'package:pokedex_flutter/data/pokemon.dart';
 import 'package:pokedex_flutter/utils/formatters.dart';
 import 'package:pokedex_flutter/widgets/image_widget.dart';
+import 'package:pokedex_flutter/widgets/stat_tile.dart';
 
-class PokemonDetails extends StatelessWidget {
+class PokemonDetails extends StatefulWidget {
   const PokemonDetails({super.key, required this.pokemon});
   final Pokemon pokemon;
-  String get _formattedID => formatId(pokemon.id);
-  String get _imageUrl => officialArtworkUrl(pokemon.id);
+
+  @override
+  State<PokemonDetails> createState() => _PokemonDetailsState();
+}
+
+class _PokemonDetailsState extends State<PokemonDetails> {
+  String get _formattedID => formatId(widget.pokemon.id);
+
+  String get _imageUrl => officialArtworkUrl(widget.pokemon.id);
+  late Future<Pokemon> _futurePokemon;
+
+  @override
+  void initState() {
+    super.initState();
+    _futurePokemon = fetchPokemon(widget.pokemon.id);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$_formattedID ${pokemon.name.toUpperCase()}'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(children: [ImageWidget(image: _imageUrl, height: 390)]),
+      appBar: AppBar(title: Text('$_formattedID ${widget.pokemon.name}')),
+      body: FutureBuilder<Pokemon>(
+        future: _futurePokemon,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          final pokemon = snapshot.data!;
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Center(child: ImageWidget(image: _imageUrl, height: 390)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    StatTile(label: 'Base Experience', value: pokemon.baseExp),
+                    StatTile(label: 'Height', value: pokemon.height, unit: 'm'),
+                    StatTile(
+                      label: 'Weight',
+                      value: pokemon.weight,
+                      unit: 'kg',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+              
+                // Add more details here using `pokemon`
+        
+          
+        
+      
+   
