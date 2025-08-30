@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter/widgets/pokemon_details.dart';
 
-import 'pokemon.dart';
+import 'data/pokemon.dart';
 import 'widgets/pokedex_tile.dart';
 
 class PokedexPage extends StatefulWidget {

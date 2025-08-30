@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:pokedex_flutter/pokemon.dart';
+import 'package:pokedex_flutter/data/pokemon.dart';
 
 import '../utils/formatters.dart';
 
