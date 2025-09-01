@@ -4,6 +4,7 @@ import 'package:pokedex_flutter/data/pokemon.dart';
 import 'package:pokedex_flutter/utils/formatters.dart';
 import 'package:pokedex_flutter/widgets/image_widget.dart';
 import 'package:pokedex_flutter/widgets/stat_tile.dart';
+import 'package:pokedex_flutter/widgets/types_display.dart';
 
 class PokemonDetails extends StatefulWidget {
   const PokemonDetails({super.key, required this.pokemon});
@@ -52,7 +53,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: Text(pokemon.listTypes)),
+                TypesDisplay(types: pokemon.listTypes),
                 Center(child: ImageWidget(image: _imageUrl, height: 390)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
