@@ -16,7 +16,7 @@ class StatTile extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: Text(
             label,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
