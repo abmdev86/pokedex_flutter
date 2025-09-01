@@ -52,7 +52,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: Text(pokemon.types[0].name)),
+                Center(child: Text(pokemon.listTypes)),
                 Center(child: ImageWidget(image: _imageUrl, height: 390)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
