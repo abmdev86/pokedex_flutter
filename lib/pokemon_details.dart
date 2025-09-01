@@ -28,7 +28,17 @@ class _PokemonDetailsState extends State<PokemonDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('$_formattedID ${widget.pokemon.name}')),
+      appBar: AppBar(
+        title: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '${widget.pokemon.name.toUpperCase()} $_formattedID',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+        ),
+      ),
       body: FutureBuilder<Pokemon>(
         future: _futurePokemon,
         builder: (context, snapshot) {
@@ -42,6 +52,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
           return SingleChildScrollView(
             child: Column(
               children: [
+                Center(child: Text(pokemon.types[0].name)),
                 Center(child: ImageWidget(image: _imageUrl, height: 390)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,6 +63,13 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                       label: 'Weight',
                       value: pokemon.weight,
                       unit: 'kg',
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Column(
+                      children: [Text('Abilities: ${pokemon.listAbilities}')],
                     ),
                   ],
                 ),

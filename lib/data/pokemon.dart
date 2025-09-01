@@ -1,5 +1,7 @@
 // pokemon.dart
 
+import 'reference_object.dart';
+
 /// Plain model with explicit parsing (prevents "Instance of ..." issues).
 class Pokemon {
   final int id;
@@ -7,6 +9,8 @@ class Pokemon {
   final int baseExp;
   final int height;
   final int weight;
+  final List<dynamic> abilities;
+  final List<ReferenceObject> types;
 
   const Pokemon({
     required this.id,
@@ -14,7 +18,12 @@ class Pokemon {
     this.baseExp = 0,
     this.height = 0,
     this.weight = 0,
+    this.abilities = const [],
+    this.types = const [],
   });
+
+  String get listAbilities => abilities.map((a) => a.name).join(', ');
+  String get listTypes => types.map((t) => t.name).join(', ');
 
   /// For /pokemon/{id} responses
   factory Pokemon.fromJson(Map<String, dynamic> json) {
@@ -23,12 +32,21 @@ class Pokemon {
     final baseExp = json['base_experience'] as int;
     final height = json['height'] as int;
     final weight = json['weight'] as int;
+    final List<ReferenceObject> abilities = parseReferenceObjects(
+      json,
+      'abilities',
+    );
+
+    final List<ReferenceObject> types = parseReferenceObjects(json, 'types');
+
     return Pokemon(
       id: id,
       name: name,
       baseExp: baseExp,
       height: height,
       weight: weight,
+      abilities: abilities,
+      types: types,
     );
   }
 
