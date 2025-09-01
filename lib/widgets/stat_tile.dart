@@ -19,11 +19,17 @@ class StatTile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         const SizedBox(height: 4),
-        Text(value.toString() + unit),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            value.toString() + unit,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
       ],
     );
   }
