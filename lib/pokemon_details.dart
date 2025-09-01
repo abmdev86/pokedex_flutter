@@ -6,6 +6,8 @@ import 'package:pokedex_flutter/widgets/image_widget.dart';
 import 'package:pokedex_flutter/widgets/stat_tile.dart';
 import 'package:pokedex_flutter/widgets/types_display.dart';
 
+import 'widgets/stat_display.dart';
+
 class PokemonDetails extends StatefulWidget {
   const PokemonDetails({super.key, required this.pokemon});
   final Pokemon pokemon;
@@ -54,19 +56,13 @@ class _PokemonDetailsState extends State<PokemonDetails> {
             child: Column(
               children: [
                 TypesDisplay(types: pokemon.listTypes),
-                Center(child: ImageWidget(image: _imageUrl, height: 390)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    StatTile(label: 'Base Experience', value: pokemon.baseExp),
-                    StatTile(label: 'Height', value: pokemon.height, unit: 'm'),
-                    StatTile(
-                      label: 'Weight',
-                      value: pokemon.weight,
-                      unit: 'kg',
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: ImageWidget(image: _imageUrl, height: 390),
+                  ),
                 ),
+                StatDisplay(pokemon: pokemon),
                 Row(
                   children: [
                     Column(
