@@ -8,7 +8,7 @@ class AbilitiesDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Split abilities by comma and trim whitespace
-    final abilityList = abilities.split(',').map((a) => a.trim()).toList();
+    abilities.split(',').map((a) => a.trim()).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
