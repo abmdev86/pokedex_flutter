@@ -29,9 +29,9 @@ class Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as int;
     final name = json['name'] as String;
-    final baseExp = json['base_experience'] as int;
-    final height = json['height'] as int;
-    final weight = json['weight'] as int;
+    final baseExp = json['base_experience'] ?? 0;
+    final height = json['height'] ?? 0;
+    final weight = json['weight'] ?? 0;
     final List<ReferenceObject> abilities = parseReferenceObjects(
       json,
       'abilities',

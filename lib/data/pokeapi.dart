@@ -14,7 +14,11 @@ final Map<String, Future<List<Pokemon>>> _inflightPage = {};
 
 /// Fetch a single Pokémon by id.
 /// Uses in-memory cache and de-dupes in-flight requests.
-Future<Pokemon> fetchPokemon(int id, {bool forceRefresh = false}) async {
+Future<Pokemon> fetchPokemon(
+  int id, {
+  bool forceRefresh = false,
+  http.Client? client,
+}) async {
   if (!forceRefresh && _pokemonCache.containsKey(id)) {
     return _pokemonCache[id]!;
   }
@@ -22,7 +26,7 @@ Future<Pokemon> fetchPokemon(int id, {bool forceRefresh = false}) async {
     return _inflightPokemon[id]!;
   }
 
-  final future = _fetchPokemonFromNetwork(id);
+  final future = _fetchPokemonFromNetwork(id, client: client);
   _inflightPokemon[id] = future;
 
   try {
