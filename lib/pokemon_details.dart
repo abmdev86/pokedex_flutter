@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_flutter/data/pokeapi.dart';
 import 'package:pokedex_flutter/data/pokemon.dart';
 import 'package:pokedex_flutter/utils/formatters.dart';
+import 'package:pokedex_flutter/widgets/abilities_display.dart';
 import 'package:pokedex_flutter/widgets/image_widget.dart';
 import 'package:pokedex_flutter/widgets/stat_tile.dart';
 import 'package:pokedex_flutter/widgets/types_display.dart';
@@ -63,13 +64,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                   ),
                 ),
                 StatDisplay(pokemon: pokemon),
-                Row(
-                  children: [
-                    Column(
-                      children: [Text('Abilities: ${pokemon.listAbilities}')],
-                    ),
-                  ],
-                ),
+                AbilitiesDisplay(abilities: pokemon.listAbilities),
               ],
             ),
           );
