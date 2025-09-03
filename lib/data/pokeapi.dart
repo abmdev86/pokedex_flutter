@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pokedex_flutter/data/reference_object.dart';
 
 import 'pokemon.dart';
 
@@ -57,6 +58,7 @@ Future<List<Pokemon>> fetchPokeList({
   int limit = 20,
   int offset = 0,
   bool forceRefresh = false,
+  http.Client? client,
 }) async {
   final key = 'limit=$limit&offset=$offset';
 
@@ -79,15 +81,39 @@ Future<List<Pokemon>> fetchPokeList({
   }
 }
 
+Future<dynamic> fetchFromReferenceObject(
+  ReferenceObject ref, {
+  http.Client? client,
+}) async {
+  final response =
+      await client?.get(Uri.parse(ref.url)) ??
+      await http.get(Uri.parse(ref.url));
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    return Pokemon.fromJson(data);
+  } else {
+    throw Exception('Failed to load Pokemon data');
+  }
+}
+
+Future<Pokemon> fromListItem(Map<String, dynamic> json) async {
+  final name = json['name'] as String;
+  final url = json['url'] as String;
+
+  return await fetchFromReferenceObject(ReferenceObject(name: name, url: url));
+}
+
 // returns a list of Pokemon {name, id}
 Future<List<Pokemon>> _fetchPokeListFromNetwork({
   required int limit,
   required int offset,
+  http.Client? client,
 }) async {
+  client ??= http.Client();
   final uri = Uri.parse(
     'https://pokeapi.co/api/v2/pokemon?limit=$limit&offset=$offset',
   );
-  final res = await http.get(uri);
+  final res = await client.get(uri);
   if (res.statusCode != 200) {
     throw Exception('Failed to load pokemon list (${res.statusCode})');
   }
@@ -99,10 +125,10 @@ Future<List<Pokemon>> _fetchPokeListFromNetwork({
   }
 
   // Convert list items {name, url} -> Pokemon(id, name)
-  return results
-      .whereType<Map<String, dynamic>>()
-      .map(Pokemon.fromListItem)
-      .toList(growable: false);
+  final pokemons = await Future.wait(
+    (results).map((item) => fromListItem(item as Map<String, dynamic>)),
+  );
+  return pokemons;
 }
 
 void clearAllPokemonCaches() {
