@@ -34,8 +34,9 @@ Future<Pokemon> fetchPokemon(int id, {bool forceRefresh = false}) async {
   }
 }
 
-Future<Pokemon> _fetchPokemonFromNetwork(int id) async {
-  final res = await http.get(
+Future<Pokemon> _fetchPokemonFromNetwork(int id, {http.Client? client}) async {
+  client ??= http.Client();
+  final res = await client.get(
     Uri.parse('https://pokeapi.co/api/v2/pokemon/$id'),
   );
   if (res.statusCode != 200) {
