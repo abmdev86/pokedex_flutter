@@ -4,7 +4,6 @@ import 'package:pokedex_flutter/data/pokemon.dart';
 import 'package:pokedex_flutter/utils/formatters.dart';
 import 'package:pokedex_flutter/widgets/abilities_display.dart';
 import 'package:pokedex_flutter/widgets/image_widget.dart';
-import 'package:pokedex_flutter/widgets/stat_tile.dart';
 import 'package:pokedex_flutter/widgets/types_display.dart';
 
 import 'widgets/stat_display.dart';
