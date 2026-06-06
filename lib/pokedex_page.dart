@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_flutter/pokemon_details.dart';
 
-import 'pokemon.dart';
+import 'data/pokeapi.dart';
+import 'data/pokemon.dart';
 import 'widgets/pokedex_tile.dart';
 
 class PokedexPage extends StatefulWidget {
@@ -109,9 +111,12 @@ class _PokedexPageState extends State<PokedexPage> {
                       children: [
                         PokedexTile(
                           pokemon: p,
-                          onTap: () => Navigator.of(
+                          onTap: () => Navigator.push(
                             context,
-                          ).pushNamed('/pokemon', arguments: p.id),
+                            MaterialPageRoute<void>(
+                              builder: (context) => PokemonDetails(pokemon: p),
+                            ),
+                          ),
                         ),
                         const Divider(height: 1, indent: 72),
                       ],

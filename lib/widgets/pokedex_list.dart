@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_flutter/widgets/pokedex_tile.dart';
-import '../pokemon.dart';
+import '../data/pokemon.dart';
 
 class PokedexList extends StatelessWidget {
   const PokedexList({super.key, required this.pokemons, this.onTileTap});

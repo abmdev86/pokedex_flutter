@@ -1,6 +1,8 @@
-// pokemon.dart
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
+import 'pokemon.dart';
 
 /// ---- Simple in-memory caches (reset when the app restarts) ----
 final Map<int, Pokemon> _pokemonCache = {};
@@ -72,6 +74,7 @@ Future<List<Pokemon>> fetchPokeList({
   }
 }
 
+// returns a list of Pokemon {name, id}
 Future<List<Pokemon>> _fetchPokeListFromNetwork({
   required int limit,
   required int offset,
@@ -97,38 +100,6 @@ Future<List<Pokemon>> _fetchPokeListFromNetwork({
       .toList(growable: false);
 }
 
-/// Plain model with explicit parsing (prevents "Instance of ..." issues).
-class Pokemon {
-  final int id;
-  final String name;
-
-  const Pokemon({required this.id, required this.name});
-
-  /// For /pokemon/{id} responses
-  factory Pokemon.fromJson(Map<String, dynamic> json) {
-    final id = json['id'] as int;
-    final name = json['name'] as String;
-    return Pokemon(id: id, name: name);
-  }
-
-  /// For list items from `{ results: [ { name, url } ] }`
-  factory Pokemon.fromListItem(Map<String, dynamic> json) {
-    final name = json['name'] as String;
-    final url = json['url'] as String;
-    final id =
-        _extractIdFromUrl(url) ??
-        (throw const FormatException('Could not extract id from url'));
-    return Pokemon(id: id, name: name);
-  }
-
-  static int? _extractIdFromUrl(String url) {
-    // Matches trailing number like .../pokemon/25/ -> 25
-    final match = RegExp(r'/(\d+)/?$').firstMatch(url);
-    return match != null ? int.tryParse(match.group(1)!) : null;
-  }
-}
-
-/// Optional helpers if you want to clear caches manually
 void clearAllPokemonCaches() {
   _pokemonCache.clear();
   _pageCache.clear();
